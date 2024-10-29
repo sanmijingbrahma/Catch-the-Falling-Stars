@@ -18,7 +18,30 @@ class Ball{
     }
 };
 
+class Box{
+    public:
+        int x, y;
+        int width, height;
+        int speed_x;
+
+
+    void Draw(){
+        DrawRectangle(x,y,width,height,WHITE);
+    }
+
+    void Update(){
+        if(IsKeyDown(KEY_LEFT)){
+            x-=speed_x;
+        }
+        if(IsKeyDown(KEY_RIGHT)){
+            x+=speed_x;
+        }
+    }
+
+};
+
 Ball ball;
+Box box;
 
 int main()
 {
@@ -31,12 +54,19 @@ int main()
     InitWindow(scrren_width,scrren_height,"Catch the Falling Starts");
     SetTargetFPS(60); // Frame rate
 
+    // Ball Properties
     ball.x=scrren_width/2-25;
     ball.y=25;
     ball.radius =25;
     ball.speed_y= 7;
 
-    // Ball Properties
+    // Box Properties
+   box.x=scrren_width/2-60;
+   box.y=scrren_height-60;
+   box.width = 120;
+   box.height = 60;
+   box.speed_x = 7; 
+
 
 
 
@@ -45,10 +75,10 @@ int main()
         BeginDrawing();
             ClearBackground(BLACK);
             ball.Update();
+            box.Update();
 
-
+            box.Draw();
             ball.Draw();
-            DrawRectangle(scrren_width/2 - 60,scrren_height-60,120,60,WHITE);
 
         EndDrawing();
     }
