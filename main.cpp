@@ -15,6 +15,7 @@ class Ball{
 
     void Update(){
         y+=speed_y;
+        
     }
 };
 
@@ -54,6 +55,10 @@ int main()
 
     const int scrren_width = 800;
     const int scrren_height = 600;
+
+    // score
+    int score = 0;
+    string scoreInString = "";
     
 
     // Game window
@@ -61,9 +66,10 @@ int main()
     SetTargetFPS(60); // Frame rate
 
     // Ball Properties
-    ball.x=scrren_width/2-25;
+    ball.x=10+rand()%((scrren_width-10)-10+1);
+    //10+rand()%(780-10+1);
     ball.y=25;
-    ball.radius =25;
+    ball.radius =20;
     ball.speed_y= 7;
 
     // Box Properties
@@ -83,10 +89,15 @@ int main()
             ball.Update();
             box.Update();
 
+
+            scoreInString = "Score : "+to_string(score);
+            DrawText(scoreInString.c_str(),15,30,20,WHITE);
             if(CheckCollisionCircleRec(Vector2{ball.x,ball.y},ball.radius,Rectangle{box.x,box.y,box.width,box.height})){
-                ball.x=scrren_width/2-25;
+                ball.x=10+rand()%((scrren_width-10)-10+1);
                 ball.y=25;
+                score++;
             }
+            
 
             box.Draw();
             ball.Draw();
