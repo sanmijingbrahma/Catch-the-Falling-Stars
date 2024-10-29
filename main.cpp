@@ -36,6 +36,12 @@ class Box{
         if(IsKeyDown(KEY_RIGHT)){
             x+=speed_x;
         }
+        if(x+width>=GetScreenWidth()){
+            x=GetScreenWidth()-width;
+        }
+        if(x<=0){
+            x=0;
+        }
     }
 
 };
