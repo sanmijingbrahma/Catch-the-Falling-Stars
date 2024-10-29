@@ -6,7 +6,7 @@ using namespace std;
 class Ball{
     public:
         float radius;
-        int x, y;
+        float x, y;
         float speed_y;
     
     void Draw(){
@@ -20,8 +20,8 @@ class Ball{
 
 class Box{
     public:
-        int x, y;
-        int width, height;
+        float x, y;
+        float width, height;
         int speed_x;
 
 
@@ -82,6 +82,11 @@ int main()
             ClearBackground(BLACK);
             ball.Update();
             box.Update();
+
+            if(CheckCollisionCircleRec(Vector2{ball.x,ball.y},ball.radius,Rectangle{box.x,box.y,box.width,box.height})){
+                ball.x=scrren_width/2-25;
+                ball.y=25;
+            }
 
             box.Draw();
             ball.Draw();
