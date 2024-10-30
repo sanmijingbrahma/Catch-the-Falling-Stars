@@ -80,7 +80,7 @@ int main()
     SetTargetFPS(60); // Frame rate
 
     // Ball Properties
-    ball.x = 10 + rand() % ((screen_width - 10) - 10 + 1);
+    ball.x = 25 + rand() % ((screen_width - 25) - 10 + 1);
     // 10+rand()%(780-10+1);
     ball.y = 25;
     ball.radius = 20;
@@ -91,7 +91,7 @@ int main()
     box.y = screen_height - 60;
     box.width = 120;
     box.height = 60;
-    box.speed_x = 7;
+    box.speed_x = 10;
 
     // Game Loop
     while (!WindowShouldClose())
@@ -131,7 +131,7 @@ int main()
                 ball.y = 25;
                 score++;
             }
-            if(ball.y+ball.radius>=GetScreenHeight()){
+            if(ball.y+ball.radius>=GetScreenHeight()+10){
                 gameState = GAME_OVER;
             }
 
@@ -147,8 +147,24 @@ int main()
             DrawText(yourScore.c_str(),screen_width/2-150,150,40,WHITE);
 
 
-            DrawRectangle(screen_width/2-160,400,320,100,BLUE);
+            float buttonX = screen_width/2 - 160;
+            float buttonY = 400;
+            float buttonWidth = 320;
+            float buttonHeight = 100;
+
+            DrawRectangle(buttonX,buttonY,buttonWidth,buttonHeight,BLUE);
             DrawText("Play Again",screen_width/2-135,420,50,WHITE);
+
+            Vector2 mousePoint = GetMousePosition();
+            if(CheckCollisionPointRec(mousePoint, Rectangle{buttonX,buttonY,buttonWidth,buttonHeight})){
+                if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+                    gameState = PLAYING;
+                    score = 0;
+                    ball.x = 25 + rand() % ((screen_width - 25) - 10 + 1);
+                    ball.y =25;
+                }
+            }
+
 
         }
 
