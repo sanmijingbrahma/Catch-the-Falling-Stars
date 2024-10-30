@@ -110,9 +110,14 @@ int main()
             DrawRectangle(buttonX, buttonY, buttonWidth, buttonHeight, BLUE);
             DrawText("Play", buttonX + 50, buttonY + 30, 50, WHITE);
 
-            
+            Vector2 mousePoint = GetMousePosition();
+            if(CheckCollisionPointRec(mousePoint, Rectangle{buttonX,buttonY,buttonWidth,buttonHeight})){
+                if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+                    gameState = PLAYING;
+                }
+            }
         }
-        else if (gameState == PLAYING)
+        if (gameState == PLAYING)
         {
 
             ball.Update();
@@ -125,18 +130,25 @@ int main()
                 ball.x = 10 + rand() % ((screen_width - 10) - 10 + 1);
                 ball.y = 25;
                 score++;
-            }else{
+            }
+            if(ball.y+ball.radius>=GetScreenHeight()){
                 gameState = GAME_OVER;
             }
+
+
 
             box.Draw();
             ball.Draw();
         }
-        else
+        if (gameState == GAME_OVER)
         {
+            string yourScore = "Your Score : "+ to_string(score);
+            DrawText("GAME OVER",screen_width/2-200,50,70,WHITE);
+            DrawText(yourScore.c_str(),screen_width/2-150,150,40,WHITE);
 
-            DrawText("GAME OVER",screen_width+250,screen_height+50,69,WHITE);
-            DrawText("Your Score :",screen_width+300,screen_height+100,50,WHITE);
+
+            DrawRectangle(screen_width/2-160,400,320,100,BLUE);
+            DrawText("Play Again",screen_width/2-135,420,50,WHITE);
 
         }
 
